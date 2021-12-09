@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/style.css"],"names":[],"mappings":"AAAA,IACE,eACF,CAEA,OACE,eACF","file":"main.449e86b4.chunk.css","sourcesContent":[".mw {\n  max-width: 700px;\n}\n\n.mw-sm {\n  max-width: 300px;\n}"]}
