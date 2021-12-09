@@ -1,4 +1,7 @@
-body {
-  margin: 0;
-  padding: 0;
+.mw {
+  max-width: 700px;
+}
+
+.mw-sm {
+  max-width: 300px;
 }
