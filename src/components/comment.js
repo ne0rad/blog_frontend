@@ -14,7 +14,7 @@ function Comment({ comment }) {
             <div className="card-body">
                 <blockquote className="blockquote mb-0">
                     <p>{comment.comment}</p>
-                    <footer className="blockquote-footer">{comment.name}</footer>
+                    <footer className="blockquote-footer text-end">{comment.name}</footer>
                 </blockquote>
             </div>
         </div>
