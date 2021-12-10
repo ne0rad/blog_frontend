@@ -3,7 +3,7 @@ import { useState } from 'react';
 import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
 
-function NewArticle({ API_URI }) {
+function NewArticle({ API_URI, refreshArticles }) {
 
     const [editorText, setEditorText] = useState('');
     const [author, setAuthor] = useState('');
@@ -49,6 +49,7 @@ function NewArticle({ API_URI }) {
             setAuthor('');
             setTitle('');
             setEditorText('');
+            refreshArticles();
         } else {
             setResponse(-1);
         }

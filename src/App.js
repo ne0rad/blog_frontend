@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   HashRouter,
   Routes,
@@ -17,7 +18,31 @@ const API_URI = process.env.REACT_APP_API_URI;
 
 function App() {
 
-  
+  const [articles, setArticles] = useState();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (loading) {
+      fetch(API_URI + '/articles')
+        .then(response => {
+          if (response.ok) return response.json();
+          else throw new Error('Failed to fetch data.');
+        })
+        .then(data => {
+          setArticles(data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          setArticles(error);
+          setLoading(false);
+        })
+    }
+  }, [loading]);
+
+  function refreshArticles() {
+    setLoading(true);
+  }
+
 
   function CustomLink({ children, to, ...props }) {
     let resolved = useResolvedPath(to);
@@ -69,10 +94,10 @@ function App() {
         </nav>
 
         <Routes>
-          <Route path="/" element={<Home API_URI={API_URI}/>} />
-          <Route path="/new" element={<NewArticle API_URI={API_URI}/>} />
+          <Route path="/" element={<Home articles={articles} />} />
+          <Route path="/new" element={<NewArticle API_URI={API_URI} refreshArticles={refreshArticles}/>} />
           <Route path="/about" element={<About />} />
-          <Route path="/articles/:id" element={<Article API_URI={API_URI}/>} />
+          <Route path="/articles/:id" element={<Article API_URI={API_URI} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
 
