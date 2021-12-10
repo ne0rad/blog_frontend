@@ -13,7 +13,7 @@ import Home from "./pages/Home";
 import NewArticle from "./pages/NewArticle";
 import NotFound from "./pages/NotFound"
 
-const API_URI = process.env.REACT_APP_API_URI || "https://rocky-falls-75959.herokuapp.com";
+const API_URI = process.env.REACT_APP_API_URI;
 
 function App() {
 
