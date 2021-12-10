@@ -10,7 +10,8 @@ function CommentForm({ API_URI, id, refreshComments }) {
 
     async function submitClick() {
         // POST request using fetch with async/await
-        if(!checkInputs()) return
+        setErrors([]);
+        if (!checkInputs()) return
         setLoading(true);
         const requestOptions = {
             method: 'POST',
@@ -76,7 +77,15 @@ function CommentForm({ API_URI, id, refreshComments }) {
                     (
                         <div className="alert alert-danger alert-dismissible fade show" role="alert">
                             Posting comment failed!
-                            <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close" onClick={() => setResponse()}></button>
+                            <button
+                                type="button" 
+                                className="btn-close" 
+                                data-bs-dismiss="alert" 
+                                aria-label="Close" 
+                                onClick={() => { 
+                                    setResponse();
+                                    setErrors([]);
+                                    }}></button>
                         </div>
                     )
             }
