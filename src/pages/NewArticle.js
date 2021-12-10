@@ -3,7 +3,7 @@ import { useState } from 'react';
 import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
 
-function NewArticle() {
+function NewArticle({ API_URI }) {
 
     const [editorText, setEditorText] = useState('');
     const [author, setAuthor] = useState('');
@@ -12,8 +12,6 @@ function NewArticle() {
     const [errors, setErrors] = useState([]);
 
     const mdParser = new MarkdownIt({
-        html: true,        // Enable HTML tags in source
-        breaks: true,        // Convert '\n' in paragraphs into <br>
         linkify: true        // Autoconvert URL-like text to links
     });
 
@@ -37,7 +35,7 @@ function NewArticle() {
             })
         };
         try {
-            const response = await fetch(process.env.REACT_APP_API_URI + '/post_article', requestOptions);
+            const response = await fetch(API_URI + '/post_article', requestOptions);
             const data = await response.json();
             checkResponse(data);
         } catch {
@@ -64,7 +62,7 @@ function NewArticle() {
         if (title.trim().length < 1 || title.trim().length > 100) {
             tempErrors.push('title');
         }
-        if (editorText.trim().length < 1 || editorText.trim().length > 1000) {
+        if (editorText.trim().length < 1) {
             tempErrors.push('editor');
         }
         if (tempErrors.length > 0) {
@@ -127,7 +125,6 @@ function NewArticle() {
                 className={errors.indexOf('editor') !== -1 && response === -1 ? "border border-danger" : "rounded"}
                 value={editorText}
                 style={{ height: '60vh' }}
-                maxLength="10000"
                 renderHTML={text => mdParser.render(text)}
                 onChange={handleEditorChange} />
             <div className="mb-3"></div>

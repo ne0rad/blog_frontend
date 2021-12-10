@@ -1,16 +1,19 @@
 import {
-  BrowserRouter as Router,
+  HashRouter,
   Routes,
   Route,
   Link,
   useMatch,
   useResolvedPath
 } from "react-router-dom";
-import About from "./pages/About";
 
+import About from "./pages/About";
+import Article from "./pages/Article";
 import Home from "./pages/Home";
 import NewArticle from "./pages/NewArticle";
 import NotFound from "./pages/NotFound"
+
+const API_URI = "https://rocky-falls-75959.herokuapp.com";
 
 function App() {
 
@@ -33,9 +36,9 @@ function App() {
   }
 
   return (
-    <Router>
+    <HashRouter>
       <div>
-        <nav className="navbar navbar-expand-md navbar-dark bg-primary">
+        <nav className="navbar navbar-expand-md navbar-dark bg-primary bg-gradient shadow">
           <div className="container-fluid">
             <Link className="navbar-brand" to="/">Blog App</Link>
             <button
@@ -66,14 +69,15 @@ function App() {
         </nav>
 
         <Routes>
-          <Route path="/" element={<Home Link={Link} />} />
-          <Route path="/new" element={<NewArticle />} />
+          <Route path="/" element={<Home API_URI={API_URI}/>} />
+          <Route path="/new" element={<NewArticle API_URI={API_URI}/>} />
           <Route path="/about" element={<About />} />
+          <Route path="/articles/:id" element={<Article API_URI={API_URI}/>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
 
       </div>
-    </Router>
+    </HashRouter>
   )
 }
 
