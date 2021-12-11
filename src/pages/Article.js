@@ -17,39 +17,37 @@ function Article({ API_URI }) {
         fetch(API_URI + '/articles/' + params.id)
             .then(response => {
                 if (response.ok) return response.json();
-                else throw new Error('Failed to load.');
+                else throw new Error('Error loading article.');
             })
             .then(data => {
                 setArticle(data);
-                setLoading(false);
             })
             .catch((error) => {
                 setArticle(error);
                 setComments(error);
-                setLoading(false);
             })
     }, [params.id, API_URI]);
 
     useEffect(() => {
         // Fetch comments
-        if(!loading) {
-        fetch(API_URI + '/comments/' + params.id)
-            .then(response => {
-                if (response.ok) return response.json();
-                else throw new Error('Failed to load comments.');
-            })
-            .then(data => {
-                setComments(data);
-            })
-            .catch((error) => {
-                setComments(error);
-            })
+        if (loading) {
+            fetch(API_URI + '/comments/' + params.id)
+                .then(response => {
+                    if (response.ok) return response.json();
+                    else throw new Error('Error loading comments.');
+                })
+                .then(data => {
+                    setComments(data);
+                })
+                .catch((error) => {
+                    setComments(error);
+                })
+            setLoading(false);
         }
     }, [params.id, API_URI, loading])
 
     function refreshComments() {
         setLoading(true);
-        setLoading(false);
     }
 
     return (
@@ -83,19 +81,28 @@ function Article({ API_URI }) {
                         : comments instanceof Error ?
                             <ErrorMessage message={comments.message} />
                             : comments.length < 1 ?
-                                (<h5>There are no comments.</h5>)
+                                (
+                                    <div>
+                                        <h5>There are no comments.</h5>
+                                        < hr />
+                                        <div className="container mb-5" id="newComment">
+                                            <CommentForm API_URI={API_URI} id={params.id} refreshComments={refreshComments} />
+                                        </div>
+                                    </div>
+                                )
                                 // All good, let's render comments
-                                : comments.map((comment, i) => <Comment key={i} comment={comment} />)
+                                : (
+                                    <div>
+                                        {comments.map((comment, i) => <Comment key={i} comment={comment} />)}
+                                        < hr />
+                                        <div className="container mb-5" id="newComment">
+                                            <CommentForm API_URI={API_URI} id={params.id} refreshComments={refreshComments} />
+                                        </div>
+                                    </div>
+                                )
                 }
             </div>
 
-            {
-                // New comment section
-            }
-            <hr />
-            <div className="container mb-5" id="newComment">
-                <CommentForm API_URI={API_URI} id={params.id} refreshComments={refreshComments} />
-            </div>
         </div>
     )
 }

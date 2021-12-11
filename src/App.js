@@ -95,7 +95,7 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Home articles={articles} />} />
-          <Route path="/new" element={<NewArticle API_URI={API_URI} refreshArticles={refreshArticles}/>} />
+          <Route path="/new" element={<NewArticle API_URI={API_URI} refreshArticles={refreshArticles} />} />
           <Route path="/about" element={<About />} />
           <Route path="/articles/:id" element={<Article API_URI={API_URI} />} />
           <Route path="*" element={<NotFound />} />
