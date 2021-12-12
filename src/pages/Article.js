@@ -69,7 +69,6 @@ function Article({ API_URI }) {
             {
                 // Comment section
             }
-            <hr />
             <div className="text-center">
                 <h3>Comments</h3>
             </div>

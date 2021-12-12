@@ -12,8 +12,8 @@ function ArticleFull({ article }) {
                 <p>By {article.author}</p>
             </div>
             <hr />
-            <div dangerouslySetInnerHTML={{ __html: (mdParser.render(JSON.parse(article.article))) }}>
-            </div>
+            <div dangerouslySetInnerHTML={{ __html: (mdParser.render(JSON.parse(article.article))) }}></div>
+            <hr />
         </div>
     )
 }
